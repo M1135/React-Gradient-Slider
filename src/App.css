@@ -1,5 +1,10 @@
 :root {
     --background-primary: rgba(243, 242, 247, 255);
+    --text-primary: rgba(80, 79, 86, 255);
+    --indicator-text-container-background: transparent;
+    --indicator-text-container-text-color: var(--text-primary);
+    --indicator-text-container-scale: 1;
+    --indicator-text-container-translate-Y: 0px;
     --border-radius: 30px;
     --thumb-size: 24px;
     --thumb-scale: 1;
@@ -12,6 +17,10 @@
 
 [slider-on-hover="true"] {
     --thumb-scale: 1.2;
+    --indicator-text-container-background: var(--thumb-primary-color);
+    --indicator-text-container-text-color: var(--background-primary);
+    --indicator-text-container-scale: 1.1;
+    --indicator-text-container-translate-Y: -10px;
 }
 
 .App {
@@ -23,7 +32,6 @@
 }
 
 .sliderContainer {
-    width: 200px;
     min-height: 100px;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
@@ -105,12 +113,24 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    font-weight: 600;
     grid-column-start: 1;
     grid-row-start: 1;
 }
 
+.currentValueIndicatorTextContainer {
+    padding: 5px;
+    border-radius: var(--border-radius);
+    background-color: var(--indicator-text-container-background);
+    color: var(--indicator-text-container-text-color);
+    transform: translateY(var(--indicator-text-container-translate-Y))
+        scale(var(--indicator-text-container-scale));
+}
+
 .minMaxIndicator {
     display: grid;
+    grid-column-start: 1;
+    grid-row-start: 3;
     grid-template-columns: 1fr 1fr;
 }
 
@@ -118,6 +138,8 @@
 .maxIndicator {
     display: flex;
     align-items: center;
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
 .minIndicator {
@@ -136,6 +158,10 @@
     }
 
     .slider::-moz-range-thumb {
+        transition: transform 0.2s ease;
+    }
+
+    .currentValueIndicatorTextContainer {
         transition: transform 0.2s ease;
     }
 }

@@ -21,8 +21,11 @@ function App() {
     };
 
     const sliderConfiguration = {
+        sliderContainerUI: {
+            width: 300, //px
+        },
         sliderUI: {
-            sliderHeight: 12, //px
+            height: 12, //px
             progressBarGradient:
                 "linear-gradient(to right, LightCyan, var(--thumb-primary-color))",
         },
@@ -32,7 +35,7 @@ function App() {
             default: 20,
         },
         indicatorUI: {
-            prefix: "",
+            prefix: "$",
             suffix: "",
         },
     };
@@ -45,7 +48,11 @@ function App() {
 
     return (
         <div className="App">
-            <div className="sliderContainer" slider-on-hover={sliderOnHover}>
+            <div
+                className="sliderContainer"
+                slider-on-hover={sliderOnHover}
+                style={{ width: sliderConfiguration.sliderContainerUI.width }}
+            >
                 <div
                     className="currentValueIndicator"
                     style={{
@@ -60,8 +67,8 @@ function App() {
                         // which means at 100% of the value, the indicator will move to the left by 0px
                         // and at 1% of the value, the indicator will move to left by 12px
                         transform: `translateX(${
-                            sliderConfiguration.sliderUI.sliderHeight -
-                            sliderConfiguration.sliderUI.sliderHeight *
+                            sliderConfiguration.sliderUI.height -
+                            sliderConfiguration.sliderUI.height *
                                 ((currentValue -
                                     sliderConfiguration.sliderValue.min) /
                                     (sliderConfiguration.sliderValue.max -
@@ -69,7 +76,7 @@ function App() {
                         }px)`,
                     }}
                 >
-                    <div>{`${sliderConfiguration.indicatorUI.prefix}${currentValue}${sliderConfiguration.indicatorUI.suffix}`}</div>
+                    <div className="currentValueIndicatorTextContainer">{`${sliderConfiguration.indicatorUI.prefix}${currentValue}${sliderConfiguration.indicatorUI.suffix}`}</div>
                 </div>
                 <div
                     className="sliderInnerContainer"
@@ -84,14 +91,14 @@ function App() {
                         className="slider"
                         onInput={handleSliderOnInput}
                         style={{
-                            height: `${sliderConfiguration.sliderUI.sliderHeight}px`,
+                            height: `${sliderConfiguration.sliderUI.height}px`,
                         }}
                     />
                     <div
                         className="sliderProgressContainer"
                         // sliderProgress height must match the width of the slider
                         style={{
-                            height: `${sliderConfiguration.sliderUI.sliderHeight}px`,
+                            height: `${sliderConfiguration.sliderUI.height}px`,
                         }}
                     >
                         <div
@@ -103,8 +110,8 @@ function App() {
                                         sliderConfiguration.sliderValue.max) *
                                     100
                                 }% + ${
-                                    sliderConfiguration.sliderUI.sliderHeight -
-                                    sliderConfiguration.sliderUI.sliderHeight *
+                                    sliderConfiguration.sliderUI.height -
+                                    sliderConfiguration.sliderUI.height *
                                         ((currentValue -
                                             sliderConfiguration.sliderValue
                                                 .min) /
@@ -123,7 +130,7 @@ function App() {
                         className="sliderBackground"
                         // sliderBackground height must match the width of the slider
                         style={{
-                            height: `${sliderConfiguration.sliderUI.sliderHeight}px`,
+                            height: `${sliderConfiguration.sliderUI.height}px`,
                         }}
                     ></div>
                 </div>
@@ -135,8 +142,8 @@ function App() {
                                 sliderConfiguration.indicatorUI.prefix.length <
                                 1
                                     ? `translateX(${
-                                          sliderConfiguration.sliderUI
-                                              .sliderHeight / 2
+                                          sliderConfiguration.sliderUI.height /
+                                          2
                                       }px)`
                                     : "unset",
                         }}
