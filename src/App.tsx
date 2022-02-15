@@ -9,15 +9,11 @@ function App() {
     };
 
     const handleSliderOnHover = () => {
-        setSliderOnHover((prevValue) => {
-            return prevValue === "false" ? "true" : "false";
-        });
+        setSliderOnHover("true");
     };
 
     const handleSliderOnMouseLeave = () => {
-        setSliderOnHover((prevValue) => {
-            return prevValue === "false" ? "true" : "false";
-        });
+        setSliderOnHover("false");
     };
 
     const sliderConfiguration = {
