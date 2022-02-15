@@ -2,11 +2,16 @@
     --background-primary: rgba(243, 242, 247, 255);
     --border-radius: 30px;
     --thumb-size: 24px;
+    --thumb-scale: 1;
     --thumb-primary-color: #0366d6;
     --thumb-box-shadow: 0 0 4px rgba(0, 0, 0, 0.3),
         -3px 9px 9px rgba(255, 255, 255, 0.33) inset,
         -1px 3px 2px rgba(255, 255, 255, 0.33) inset,
         0 0 0 99px var(--thumb-primary-color) inset;
+}
+
+[slider-on-hover="true"] {
+    --thumb-scale: 1.2;
 }
 
 .App {
@@ -76,6 +81,7 @@
     appearance: none;
     width: var(--thumb-size); /* Set a specific slider handle width */
     height: var(--thumb-size); /* Slider handle height */
+    transform: scale(var(--thumb-scale));
     background: var(----thumb-primary-color);
     cursor: grab; /* Cursor on hover */
     border-radius: var(--border-radius);
@@ -86,6 +92,8 @@
 .slider::-moz-range-thumb {
     width: var(--thumb-size); /* Set a specific slider handle width */
     height: var(--thumb-size); /* Slider handle height */
+    transform: scale(var(--thumb-scale));
+
     background: var(----thumb-primary-color);
     cursor: grab; /* Cursor on hover */
     border-radius: var(--border-radius);
@@ -120,4 +128,14 @@
 .maxIndicator {
     grid-column-start: 2;
     justify-content: flex-end;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .slider::-webkit-slider-thumb {
+        transition: transform 0.2s ease;
+    }
+
+    .slider::-moz-range-thumb {
+        transition: transform 0.2s ease;
+    }
 }

@@ -5,7 +5,19 @@ function App() {
     const handleSliderOnInput = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        setValue(parseInt(event.target.value));
+        setCurrentValue(parseInt(event.target.value));
+    };
+
+    const handleSliderOnHover = () => {
+        setSliderOnHover((prevValue) => {
+            return prevValue === "false" ? "true" : "false";
+        });
+    };
+
+    const handleSliderOnMouseLeave = () => {
+        setSliderOnHover((prevValue) => {
+            return prevValue === "false" ? "true" : "false";
+        });
     };
 
     const sliderConfiguration = {
@@ -25,16 +37,22 @@ function App() {
         },
     };
 
-    const [value, setValue] = useState(sliderConfiguration.sliderValue.default);
+    const [currentValue, setCurrentValue] = useState(
+        sliderConfiguration.sliderValue.default
+    );
+
+    const [sliderOnHover, setSliderOnHover] = useState("false");
 
     return (
         <div className="App">
-            <div className="sliderContainer">
+            <div className="sliderContainer" slider-on-hover={sliderOnHover}>
                 <div
                     className="currentValueIndicator"
                     style={{
                         width: `${
-                            (value / sliderConfiguration.sliderValue.max) * 100
+                            (currentValue /
+                                sliderConfiguration.sliderValue.max) *
+                            100
                         }%`,
                         // align the indicator to match with the start and end positions of the slider
                         // eg: current value is 1% of max value then move the indicator to the left by
@@ -44,15 +62,20 @@ function App() {
                         transform: `translateX(${
                             sliderConfiguration.sliderUI.sliderHeight -
                             sliderConfiguration.sliderUI.sliderHeight *
-                                ((value - sliderConfiguration.sliderValue.min) /
+                                ((currentValue -
+                                    sliderConfiguration.sliderValue.min) /
                                     (sliderConfiguration.sliderValue.max -
                                         sliderConfiguration.sliderValue.min))
                         }px)`,
                     }}
                 >
-                    <div>{`${sliderConfiguration.indicatorUI.prefix}${value}${sliderConfiguration.indicatorUI.suffix}`}</div>
+                    <div>{`${sliderConfiguration.indicatorUI.prefix}${currentValue}${sliderConfiguration.indicatorUI.suffix}`}</div>
                 </div>
-                <div className="sliderInnerContainer">
+                <div
+                    className="sliderInnerContainer"
+                    onMouseOver={handleSliderOnHover}
+                    onMouseLeave={handleSliderOnMouseLeave}
+                >
                     <input
                         type="range"
                         min={sliderConfiguration.sliderValue.min}
@@ -76,13 +99,13 @@ function App() {
                             style={{
                                 // explained in the value indicator section
                                 width: `calc(${
-                                    (value /
+                                    (currentValue /
                                         sliderConfiguration.sliderValue.max) *
                                     100
                                 }% + ${
                                     sliderConfiguration.sliderUI.sliderHeight -
                                     sliderConfiguration.sliderUI.sliderHeight *
-                                        ((value -
+                                        ((currentValue -
                                             sliderConfiguration.sliderValue
                                                 .min) /
                                             (sliderConfiguration.sliderValue
