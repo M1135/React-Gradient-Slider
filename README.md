@@ -7,6 +7,10 @@ This project was created as a replicate version of [UI-Range](https://github.com
 I stumbled across his codepen the other day, frustrated that I didn't understand anything about his code.
 So I decided to make one myself in React and implement my own way of logic in it.
 
+## Demo
+
+[CodePen](https://codepen.io/M1135/pen/Vwrrzdx)
+
 ## Installation
 
 ```bash
