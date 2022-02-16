@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
+import appStylesModule from "./App.module.style";
 
 function App() {
+    const appStyles = appStylesModule();
+
     const handleSliderOnInput = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -45,12 +48,12 @@ function App() {
     return (
         <div className="App">
             <div
-                className="sliderContainer"
+                className={appStyles.sliderContainer}
                 slider-on-hover={sliderOnHover}
                 style={{ width: sliderConfiguration.sliderContainerUI.width }}
             >
                 <div
-                    className="currentValueIndicator"
+                    className={appStyles.currentValueIndicator}
                     style={{
                         width: `${
                             (currentValue /
@@ -72,10 +75,12 @@ function App() {
                         }px)`,
                     }}
                 >
-                    <div className="currentValueIndicatorTextContainer">{`${sliderConfiguration.indicatorUI.prefix}${currentValue}${sliderConfiguration.indicatorUI.suffix}`}</div>
+                    <div
+                        className={appStyles.currentValueIndicatorTextContainer}
+                    >{`${sliderConfiguration.indicatorUI.prefix}${currentValue}${sliderConfiguration.indicatorUI.suffix}`}</div>
                 </div>
                 <div
-                    className="sliderInnerContainer"
+                    className={appStyles.sliderInnerContainer}
                     onMouseOver={handleSliderOnHover}
                     onMouseLeave={handleSliderOnMouseLeave}
                 >
@@ -84,21 +89,21 @@ function App() {
                         min={sliderConfiguration.sliderValue.min}
                         max={sliderConfiguration.sliderValue.max}
                         defaultValue={sliderConfiguration.sliderValue.default}
-                        className="slider"
+                        className={appStyles.slider}
                         onInput={handleSliderOnInput}
                         style={{
                             height: `${sliderConfiguration.sliderUI.height}px`,
                         }}
                     />
                     <div
-                        className="sliderProgressContainer"
+                        className={appStyles.sliderProgressContainer}
                         // sliderProgress height must match the width of the slider
                         style={{
                             height: `${sliderConfiguration.sliderUI.height}px`,
                         }}
                     >
                         <div
-                            className="sliderProgress"
+                            className={appStyles.sliderProgress}
                             style={{
                                 // explained in the value indicator section
                                 width: `calc(${
@@ -123,30 +128,18 @@ function App() {
                         ></div>
                     </div>
                     <div
-                        className="sliderBackground"
+                        className={appStyles.sliderBackground}
                         // sliderBackground height must match the width of the slider
                         style={{
                             height: `${sliderConfiguration.sliderUI.height}px`,
                         }}
                     ></div>
                 </div>
-                <div className="minMaxIndicator">
-                    <div
-                        className="minIndicator"
-                        style={{
-                            transform:
-                                sliderConfiguration.indicatorUI.prefix.length <
-                                1
-                                    ? `translateX(${
-                                          sliderConfiguration.sliderUI.height /
-                                          2
-                                      }px)`
-                                    : "unset",
-                        }}
-                    >
+                <div className={appStyles.minMaxIndicator}>
+                    <div className={appStyles.minIndicator}>
                         {`${sliderConfiguration.indicatorUI.prefix}${sliderConfiguration.sliderValue.min}${sliderConfiguration.indicatorUI.suffix}`}
                     </div>
-                    <div className="maxIndicator">
+                    <div className={appStyles.maxIndicator}>
                         {`${sliderConfiguration.indicatorUI.prefix}${sliderConfiguration.sliderValue.max}${sliderConfiguration.indicatorUI.suffix}`}
                     </div>
                 </div>
