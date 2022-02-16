@@ -1,23 +1,18 @@
-import React, { useState } from "react";
-import "./App.css";
+import React, { useEffect, useRef, useState } from "react";
 import appStylesModule from "./App.module.style";
+import { isDesktop } from "react-device-detect";
+import "./App.css";
 
 function App() {
-    const appStyles = appStylesModule();
-
     const handleSliderOnInput = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setCurrentValue(parseInt(event.target.value));
     };
 
-    const handleSliderOnHover = () => {
-        setSliderOnHover("true");
-    };
+    const appStyles = appStylesModule();
 
-    const handleSliderOnMouseLeave = () => {
-        setSliderOnHover("false");
-    };
+    const slider = useRef<HTMLInputElement>(null);
 
     const sliderConfiguration = {
         sliderContainerUI: {
@@ -44,6 +39,58 @@ function App() {
     );
 
     const [sliderOnHover, setSliderOnHover] = useState("false");
+
+    useEffect(() => {
+        const handleSliderOnMouseOver = () => {
+            setSliderOnHover("true");
+        };
+
+        const handleSliderOnMouseLeave = () => {
+            setSliderOnHover("false");
+        };
+
+        if (slider && slider.current) {
+            if (isDesktop) {
+                slider.current.addEventListener(
+                    "mouseenter",
+                    handleSliderOnMouseOver
+                );
+                slider.current.addEventListener(
+                    "mouseleave",
+                    handleSliderOnMouseLeave
+                );
+                return () => {
+                    slider.current?.removeEventListener(
+                        "mouseenter",
+                        handleSliderOnMouseOver
+                    );
+                    slider.current?.removeEventListener(
+                        "mouseleave",
+                        handleSliderOnMouseLeave
+                    );
+                };
+            } else {
+                slider.current.addEventListener(
+                    "touchstart",
+                    handleSliderOnMouseOver
+                );
+                slider.current.addEventListener(
+                    "touchend",
+                    handleSliderOnMouseLeave
+                );
+                return () => {
+                    slider.current?.removeEventListener(
+                        "touchend",
+                        handleSliderOnMouseOver
+                    );
+                    slider.current?.removeEventListener(
+                        "touchend",
+                        handleSliderOnMouseLeave
+                    );
+                };
+            }
+        }
+    }, []);
 
     return (
         <div className="App">
@@ -79,17 +126,14 @@ function App() {
                         className={appStyles.currentValueIndicatorTextContainer}
                     >{`${sliderConfiguration.indicatorUI.prefix}${currentValue}${sliderConfiguration.indicatorUI.suffix}`}</div>
                 </div>
-                <div
-                    className={appStyles.sliderInnerContainer}
-                    onMouseOver={handleSliderOnHover}
-                    onMouseLeave={handleSliderOnMouseLeave}
-                >
+                <div className={appStyles.sliderInnerContainer}>
                     <input
                         type="range"
                         min={sliderConfiguration.sliderValue.min}
                         max={sliderConfiguration.sliderValue.max}
                         defaultValue={sliderConfiguration.sliderValue.default}
                         className={appStyles.slider}
+                        ref={slider}
                         onInput={handleSliderOnInput}
                         style={{
                             height: `${sliderConfiguration.sliderUI.height}px`,
