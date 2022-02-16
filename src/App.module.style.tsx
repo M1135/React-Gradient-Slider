@@ -47,6 +47,7 @@ const appStylesModule = createUseStyles({
         borderRadius: "var(--border-radius)",
         boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2) inset",
         zIndex: 1,
+        cursor: "pointer",
         "&::-webkit-slider-thumb": {
             WebkitAppearance: "none",
             appearance: "none",
@@ -111,15 +112,16 @@ const appStylesModule = createUseStyles({
     "@media (prefers-reduced-motion: no-preference)": {
         slider: {
             "&::-webkit-slider-thumb": {
-                transition: "transform 0.2s ease",
+                transition: "transform 0.3s ease",
             },
             "&::-moz-range-thumb": {
-                transition: "transform 0.2s ease",
+                transition: "transform 0.3s ease",
             },
         },
 
         currentValueIndicatorTextContainer: {
-            transition: "transform 0.2s ease",
+            transition:
+                "transform 0.3s ease, background-color 0.3s ease, color 0.3s ease",
         },
     },
 });
